@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="Assets/Logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      @keyframes smoothBounce {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-6px);
+          opacity: 0.8;
+        }
+      }
+
+      .smooth-bounce {
+        animation: smoothBounce 0.6s ease-in-out infinite;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.8s ease-out;
+      }
+    </style>
+    <title>Dashboard</title>
+  </head>
+  <body
+    class="bg-gray-100"
+    x-data="{ openAside: false, showLogout: false, openProfile: false }"
+  >
+    <!-- Loading Popup -->
+    <div
+      x-data="{ loading: true }"
+      x-init="
+    window.addEventListener('load', () => {
+      setTimeout(() => { loading = false }, 400);
+    });
+  "
+      x-show="loading"
+      x-transition.opacity.duration.700ms
+      class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-emerald-200 to-emerald-300"
+    >
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/60"></div>
+
+      <!-- Content -->
+      <div
+        class="relative text-white flex flex-col items-center space-y-4 animate-fadeIn"
+      >
+        <!-- Logo berputar -->
+        <img
+          src="Assets/Logo.png"
+          class="w-20 h-20 animate-spin-slow drop-shadow-xl"
+          alt="Logo"
+        />
+
+        <!-- Title -->
+        <h1 class="text-3xl font-bold tracking-wide drop-shadow-lg">
+          EcoRecycle
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg tracking-wide opacity-90">
+          Transform Waste Into Worth
+        </p>
+
+        <!-- Loading dots -->
+        <div class="flex space-x-2 pt-2">
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0s"
+          ></div>
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0.15s"
+          ></div>
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0.3s"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!-- =============== ASIDE (Mobile Slide + Desktop Fixed) =============== -->
+    <aside
+      class="fixed top-0 left-0 h-full w-64 bg-white shadow-md z-[45] transform transition-all duration-300 -translate-x-full lg:translate-x-0"
+      :class="{ '-translate-x-full': !openAside, 'translate-x-0': openAside }"
+    >
+      <div class="flex items-center justify-between px-5 py-4 border-b h-20">
+        <!-- Logo + Title -->
+        <div class="flex items-center gap-2">
+          <img src="Assets/Logo.png" alt="" class="w-7 h-7" />
+          <h2 class="font-semibold text-lg">EcoRecycle</h2>
+        </div>
+
+        <!-- Close Button (mobile only) -->
+        <button @click="openAside=false" class="lg:hidden text-xl">✕</button>
+      </div>
+
+      <!-- Wrapper untuk menu & logout agar logout tetap di bawah -->
+      <div
+        class="flex flex-col justify-between h-[calc(100%-80px)] py-5 px-6 mt-3"
+      >
+        <!-- MENU -->
+        <nav class="space-y-2">
+          <a
+            href="dashboard.html"
+            class="flex items-center gap-3 text-green-600 font-medium pl-3 bg-green-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-home.png" class="w-4" />
+            Dashboard
+          </a>
+
+          <a
+            href="upload.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-uplod.png" class="w-4" />
+            Upload
+          </a>
+
+          <a
+            href="quizzes.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-quiz.png" class="w-4" />
+            Quizzes
+          </a>
+
+          <a
+            href="calculate.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-calulate.png" class="w-4" />
+            Calculate
+          </a>
+
+          <a
+            href="wastecheck.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-check.png" class="w-4 rounded-sm" />
+            WasteCheck
+          </a>
+
+          <a
+            href="comunity.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-comunity.png" class="w-4" />
+            Community
+          </a>
+
+          <a
+            href="shop.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-shop.png" class="w-4" />
+            Shop
+          </a>
+
+          <a
+            href="blog.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-blog.png" class="w-4" />
+            Blog
+          </a>
+        </nav>
+
+        <!-- LOGOUT (selalu di bawah) -->
+        <div class="pt-4 mb-6">
+          <button
+            class="flex items-center gap-3 text-red-500 pl-1"
+            @click="showLogout = true; openAside = false"
+          >
+            <img src="Assets/D-exit.png" class="w-4" />
+            Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- BACKDROP MOBILE -->
+    <div
+      x-show="openAside"
+      @click="openAside=false"
+      class="fixed inset-0 bg-black/40 z-40 lg:hidden"
+    ></div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <header class="pl-0 lg:pl-64 bg-white border-b sticky top-0 z-30 h-20">
+      <div class="flex items-center justify-between px-4 py-3">
+        <!-- LEFT (Hamburger + Title) -->
+        <div class="flex items-center gap-3">
+          <!-- Hamburger (mobile only) -->
+          <button @click="openAside=true" class="lg:hidden text-2xl">☰</button>
+
+          <!-- Title -->
+          <div>
+            <h1 class="text-lg font-semibold">Dashboard</h1>
+            <p class="text-xs text-gray-500 -mt-1">Selamat datang kembali!</p>
+          </div>
+        </div>
+        <!-- Search (hidden on mobile) -->
+        <div
+          class="hidden md:flex items-center bg-gray-100 rounded-2xl px-6 py-3 w-64"
+        >
+          <img src="Assets/Search.png" class="w-4 mr-2" />
+          <input
+            type="text"
+            placeholder="Search article..."
+            class="bg-transparent outline-none w-full text-sm"
+          />
+        </div>
+        <!-- RIGHT -->
+        <div class="flex items-center gap-4 md:mr-10">
+          <!-- Notification button -->
+          <button
+            class="p-2 rounded-full bg-gray-100"
+            onclick="window.location.href = 'notifikasi.html'"
+          >
+            <img id="notifIcon" src="Assets/Lonceng.png" class="w-5" />
+          </button>
+
+          <!-- PROFILE BUTTON -->
+          <button
+            @click="openProfile = !openProfile"
+            class="flex items-center gap-2 p-2 pr-3 bg-gray-100 rounded-full hover:bg-gray-200 transition"
+          >
+            <img
+              src="Assets/Profil.png"
+              class="w-9 h-9 rounded-full"
+              id="profilePhoto"
+            />
+
+            <div class="hidden md:block text-left">
+              <p
+                class="text-sm font-semibold leading-tight"
+                id="username-1"
+              ></p>
+              <p class="text-[11px] text-gray-500">
+                <span id="level-1"></span> • <span id="poin-1"></span>
+              </p>
+            </div>
+          </button>
+
+          <!-- DROPDOWN -->
+          <div
+            x-show="openProfile"
+            @click.outside="openProfile = false"
+            x-transition
+            class="absolute right-4 top-full mt-2 w-64 bg-white rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-5 z-50"
+          >
+            <!-- NAME + EMAIL -->
+            <div class="mb-4">
+              <p class="text-base font-semibold" id="username-2"></p>
+              <p class="text-xs text-gray-500 break-words" id="email"></p>
+
+              <!-- LEVEL & POINTS BOX -->
+              <div class="mt-3 flex items-center gap-3">
+                <div
+                  class="px-3 py-1 rounded-lg text-sm font-medium bg-[#DCFCE7] text-green-700"
+                >
+                  <span id="level-2"></span>
+                </div>
+                <div
+                  class="px-3 py-1 rounded-lg text-sm font-medium bg-[#FEF9C3] text-yellow-700"
+                >
+                  <span id="poin-2"></span>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3 border-gray-200" />
+
+            <!-- MENU LIST -->
+            <ul class="">
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href = 'profile.html'"
+              >
+                <img src="Assets/P-profile.png" alt="" class="w-4" />
+                <span><a href="profile.html">Profile Saya</a></span>
+              </li>
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href = 'settings.html'"
+              >
+                <img src="Assets/P-settings.png" alt="" class="w-4" />
+                <span><a href="setting.html">Pengaturan</a></span>
+              </li>
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href = 'bantuan.html'"
+              >
+                <img src="Assets/P-bantuan.png" alt="" class="w-4" />
+                <span><a href="bantuan.html">Bantuan</a></span>
+              </li>
+            </ul>
+
+            <hr class="my-3 border-gray-200" />
+
+            <!-- LOGOUT -->
+            <button
+              class="w-full text-left flex items-center gap-3 text-red-500 hover:text-red-600 transition p-2"
+              @click="showLogout = true ; openProfile = false"
+            >
+              <img src="Assets/D-exit.png" alt="" class="w-4" /> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== CONTENT ==================== -->
+    <main class="md:p-10 pl-0 lg:pl-64 font-semibold">
+      <div>
+        <!-- Overlay -->
+        <div
+          x-show="showLogout"
+          @click="showLogout = false"
+          x-transition.opacity
+          class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-100"
+        >
+          <!-- Popup Card -->
+          <div
+            @click.stop
+            x-show="showLogout"
+            x-transition.scale.origin.center
+            class="bg-white w-96 p-8 rounded-2xl shadow-xl text-center"
+          >
+            <!-- Icon -->
+            <div class="flex justify-center mb-4">
+              <img src="Assets/D-logout.png" alt="" class="w-20" />
+            </div>
+
+            <!-- Text -->
+            <h2 class="text-2xl font-bold mb-1">Yakin mau logout?</h2>
+            <p class="text-gray-500 mb-6 text-sm">
+              Kamu akan keluar dari sesi ini.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 justify-center">
+              <button
+                class="bg-red-600 text-white px-5 py-2 rounded-full font-medium hover:brightness-90"
+                @click="window.location.href = 'index.html'"
+              >
+                Iya, Logout
+              </button>
+
+              <button
+                class="bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-medium hover:bg-gray-300"
+                @click="showLogout = false"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div
+          class="mx-auto w-full md:w-[90%] p-4 md:py-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-3xl"
+        >
+          <!-- ============== LEFT CARD ============== -->
+          <div
+            class="col-span-1 md:col-span-2 bg-gradient-to-br from-emerald-600 to-emerald-700 text-white py-6 px-4 md:p-10 rounded-2xl shadow-lg"
+          >
+            <!-- Header -->
+            <div class="flex items-center gap-3 mb-3">
+              <img src="Assets/D-hello.png" class="w-12 h-15" alt="" />
+              <p class="font-medium text-lg">Selamat Datang Kembali</p>
+            </div>
+
+            <h1 class="text-3xl md:text-5xl font-bold mb-4" id="greeting"></h1>
+
+            <p class="text-sm md:text-base leading-relaxed mb-8 w-3/4">
+              Progres kamu hari ini luar biasa, Kamu sudah mengumpulkan point
+              sebanyak
+              <span class="font-bold"><span id="poin-3"></span></span>
+            </p>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-3 gap-2 md:gap-4 mb-8">
+              <div class="bg-white/10 rounded-xl p-4 text-center">
+                <p class="text-sm">Total Poin</p>
+                <p class="text-2xl md:text-3xl font-bold" id="poin"></p>
+              </div>
+
+              <div class="bg-white/10 rounded-xl p-4 text-center">
+                <p class="text-sm">Level</p>
+                <p class="text-2xl md:text-3xl font-bold" id="level">2</p>
+              </div>
+
+              <div class="bg-white/10 rounded-xl py-4 px-2 md:p-4 text-center">
+                <p class="text-sm">LeaderBoard</p>
+                <p class="text-2xl md:text-3xl font-bold">#30</p>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-4 text-sm md:text-lg">
+              <button
+                class="flex items-center gap-2 bg-white text-emerald-600 px-5 py-2 rounded-lg font-medium shadow"
+              >
+                <img src="Assets/D-uplod-2.png" class="w-4" />
+                <a href="upload.html">Upload Item</a>
+              </button>
+
+              <button
+                class="flex items-center gap-2 bg-white/10 border border-white/20 px-5 py-2 rounded-lg font-medium"
+              >
+                <img src="Assets/D-comunity-2.png" class="w-4" /><a
+                  href="comunity.html"
+                  >Community</a
+                >
+              </button>
+            </div>
+          </div>
+
+          <!-- ============== RIGHT CARD ============== -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-6">
+            <!-- Title -->
+            <div class="text-center">
+              <p class="text-sm text-gray-500">Level Saat ini</p>
+              <h2 class="text-3xl font-bold">User Pemula</h2>
+              <p
+                class="text-lg text-emerald-600 font-semibold"
+                id="level-3"
+              ></p>
+            </div>
+
+            <!-- Circle Progress -->
+            <div class="flex justify-center">
+              <div
+                id="circleProgress"
+                class="w-40 h-40 rounded-full flex items-center justify-center relative"
+                style="background: conic-gradient(#10b981 0deg, #e5e7eb 0deg)"
+              >
+                <div
+                  class="w-[calc(100%-26px)] h-[calc(100%-26px)] bg-white rounded-full flex items-center justify-center"
+                >
+                  <div class="flex flex-col items-center leading-none">
+                    <p
+                      id="circlePercent"
+                      class="text-4xl font-bold text-gray-800"
+                    >
+                      0%
+                    </p>
+                    <p class="text-sm font-normal">Complete</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress Card -->
+            <div class="border border-gray-200 rounded-xl p-4 text-sm">
+              <p class="font-semibold mb-1">
+                Progres <span id="levelText"></span>
+              </p>
+
+              <div
+                class="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-1"
+              >
+                <div
+                  id="progressBar"
+                  class="h-full bg-emerald-500 transition-all duration-500"
+                  style="width: 0%"
+                ></div>
+              </div>
+
+              <p id="progressText" class="text-xs text-gray-500">0/300</p>
+            </div>
+
+            <!-- Reward Card -->
+            <div
+              class="border border-gray-200 rounded-xl p-4 flex items-start gap-3"
+            >
+              <img src="Assets/D-gift.png" class="w-10 h-10 my-auto" />
+              <div>
+                <p class="text-sm text-gray-500 font-semibold">
+                  Reward Selanjutnya
+                </p>
+                <p class="text-lg">Bonus 1,000 poin</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mx-auto w-full md:w-[90%] p-4 md:py-6">
+        <!-- SECTION: How to earn points -->
+        <div
+          class="border border-[#FDE68A] border-[3px] rounded-2xl p-6 bg-[#FEFCE8] mb-6"
+        >
+          <!-- Title -->
+          <div class="flex items-center gap-3 mb-10">
+            <img src="Assets/bintang.png" class="w-10" />
+            <h2 class="text-2xl font-bold text-gray-800">
+              Cara Menaikkan Level
+            </h2>
+          </div>
+
+          <!-- LIST -->
+          <div class="space-y-6 text-lg">
+            <!-- ITEM -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 rounded-lg">
+                  <img src="Assets/D-img.png" class="w-10" />
+                </div>
+                <p class="text-gray-700 font-medium">Upload Gambar Sampah</p>
+              </div>
+              <span
+                class="bg-emerald-600 text-white px-4 py-1 rounded-lg text-xl font-semibold w-16"
+                >20+</span
+              >
+            </div>
+
+            <!-- ITEM -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 rounded-lg">
+                  <img src="Assets/D-brain.png" class="w-10" />
+                </div>
+                <p class="text-gray-700 font-medium">Selesaikan Kuis</p>
+              </div>
+              <div
+                class="bg-emerald-600 text-white px-4 py-1 rounded-lg text-xl font-semibold w-16 flex"
+              >
+                25+
+              </div>
+            </div>
+
+            <!-- ITEM -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 rounded-lg">
+                  <img src="Assets/D-chat.png" class="w-10" />
+                </div>
+                <p class="text-gray-700 font-medium">Aktif Di Community</p>
+              </div>
+              <span
+                class="bg-emerald-600 text-white px-4 py-1 rounded-lg text-xl font-semibold w-16"
+                >30+</span
+              >
+            </div>
+
+            <!-- ITEM -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 rounded-lg">
+                  <img src="Assets/D-book.png" class="w-10" />
+                </div>
+                <p class="text-gray-700 font-medium">Baca Artikel Edukasi</p>
+              </div>
+              <span
+                class="bg-emerald-600 text-white px-4 py-1 rounded-lg text-xl font-semibold w-16"
+                >20+</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mx-auto w-full md:w-[90%] p-4 md:py-6">
+        <!-- SECTION: How to earn points -->
+        <div
+          class="border border-emerald-500 border-[3px] rounded-2xl p-6 bg-white mb-6"
+        >
+          <!-- Title -->
+          <div class="flex items-center gap-3 mb-10">
+            <img src="Assets/D-light-1.png" class="w-7" />
+            <h2 class="text-2xl font-bold text-gray-800">
+              Cara mendapatkan poin
+            </h2>
+          </div>
+
+          <!-- LIST -->
+          <div class="space-y-6 text-lg">
+            <!-- ITEM -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 rounded-lg">
+                  <img src="Assets/D-img.png" class="w-10" />
+                </div>
+                <p class="text-gray-700 font-medium">Upload Gambar Sampah</p>
+              </div>
+              <span
+                class="bg-emerald-600 text-white px-4 py-1 rounded-lg text-xl font-semibold w-16"
+                >10+</span
+              >
+            </div>
+
+            <!-- ITEM -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 rounded-lg">
+                  <img src="Assets/D-brain.png" class="w-10" />
+                </div>
+                <p class="text-gray-700 font-medium">Selesaikan Kuis</p>
+              </div>
+              <div
+                class="bg-emerald-600 text-white px-4 py-1 rounded-lg text-xl font-semibold w-16 flex"
+              >
+                30+
+              </div>
+            </div>
+
+            <!-- ITEM -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 rounded-lg">
+                  <img src="Assets/D-chat.png" class="w-10" />
+                </div>
+                <p class="text-gray-700 font-medium">Aktif Di Community</p>
+              </div>
+              <span
+                class="bg-emerald-600 text-white px-4 py-1 rounded-lg text-xl font-semibold w-16"
+                >50+</span
+              >
+            </div>
+
+            <!-- ITEM -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 rounded-lg">
+                  <img src="Assets/D-book.png" class="w-10" />
+                </div>
+                <p class="text-gray-700 font-medium">Baca Artikel Edukasi</p>
+              </div>
+              <span
+                class="bg-emerald-600 text-white px-4 py-1 rounded-lg text-xl font-semibold w-16"
+                >25+</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mx-auto w-full md:w-[90%] p-4 md:py-6">
+        <div
+          class="border border-emerald-300 border-[3px] bg-emerald-50 rounded-2xl p-6"
+        >
+          <div class="flex items-start gap-4">
+            <!-- ICON -->
+            <div class="bg-emerald-600 rounded-lg">
+              <img src="Assets/D-light-2.png" class="w-12" />
+            </div>
+
+            <!-- TEXT -->
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-gray-800 mb-1">
+                Tips Maksimalkan Poin
+              </h3>
+
+              <p
+                class="text-gray-700 leading-relaxed text-sm font-normal max-w-3xl"
+              >
+                Sering-sering upload foto sampah untuk deteksi otomatis dan
+                bonus poin. Aktif share dan engage di Community supaya interaksi
+                jadi sumber poin. Baca konten edukasi harian untuk belajar
+                sekaligus naik level poinmu!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Container Section -->
+      <section class="mx-auto w-full md:w-[90%] p-4 md:py-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-900">Artikel Terbaru</h2>
+
+          <a
+            href="blog.html"
+            class="text-green-600 hover:text-green-700 font-semibold flex items-center gap-1"
+          >
+            Lihat Semua
+            <span class="w-3 pt-1"
+              ><img src="Assets/Arrow-g.png" alt=""
+            /></span>
+          </a>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- CARD -->
+          <div
+            class="bg-white rounded-xl shadow transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            onclick="window.location.href = 'blog-2.html'"
+          >
+            <img
+              src="Assets/Img-blog-1.png"
+              class="w-full h-48 object-cover rounded-lg"
+              alt=""
+            />
+
+            <div class="mt-2 px-3 pt-3 pb-8 space-y-4">
+              <span
+                class="text-xs bg-green-200 text-green-700 px-2 py-1 rounded"
+                >Education</span
+              >
+
+              <h3 class="font-bold text-lg mt-2">
+                Panduan Lengkap Simbol Daur Ulang Plastik
+              </h3>
+
+              <p class="text-gray-500 text-sm font-normal mt-1">
+                Memahami angka dan logo yang terdapat pada produk plastik dan
+                artinya.
+              </p>
+
+              <!-- Footer -->
+              <div
+                class="flex justify-between items-center mt-4 text-gray-500 text-sm"
+              >
+                <div class="flex items-center gap-2">
+                  <!-- Icon profile -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 4.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 22.5a8.25 
+                                     8.25 0 1115 0v.75H4.5v-.75z"
+                    />
+                  </svg>
+                  <span>Sarah Green</span>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  <!-- Icon jam -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 8v6l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span>5 min read</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div
+            class="bg-white rounded-xl shadow transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            onclick="window.location.href = 'blog-2.html'"
+          >
+            <img
+              src="Assets/Img-blog-2.png"
+              class="w-full h-48 object-cover rounded-lg"
+              alt=""
+            />
+
+            <div class="mt-2 px-3 pt-3 pb-8 space-y-4">
+              <span
+                class="text-xs bg-green-200 text-green-700 px-2 py-1 rounded"
+                >Impact</span
+              >
+
+              <h3 class="font-bold text-lg mt-2">
+                Bagaimana Upaya Daur Ulang Anda Melawan Perubahan Iklim
+              </h3>
+
+              <p class="text-gray-500 text-sm font-normal mt-1">
+                Pelajari hubungan langsung antara daur ulang dan pengurangan
+                emisi karbon global.
+              </p>
+
+              <!-- Footer -->
+              <div
+                class="flex justify-between items-center mt-4 text-gray-500 text-sm"
+              >
+                <div class="flex items-center gap-2">
+                  <!-- Icon profile -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 4.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 22.5a8.25 
+                                     8.25 0 1115 0v.75H4.5v-.75z"
+                    />
+                  </svg>
+                  <span>Sarah Green</span>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  <!-- Icon jam -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 8v6l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span>5 min read</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3 -->
+          <div
+            class="bg-white rounded-xl shadow transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            onclick="window.location.href = 'blog-2.html'"
+          >
+            <img
+              src="Assets/Img-blog-3.png"
+              class="w-full h-48 object-cover rounded-lg"
+              alt=""
+            />
+
+            <div class="mt-2 px-3 pt-3 pb-8 space-y-4">
+              <span
+                class="text-xs bg-green-200 text-green-700 px-2 py-1 rounded"
+                >Lifestyle</span
+              >
+
+              <h3 class="font-bold text-lg mt-2">
+                Panduan Lengkap Daur Ulang Sampah Makanan
+              </h3>
+
+              <p class="text-gray-500 text-sm font-normal mt-1">
+                Kurangi sampah dengan memahami metode daur ulang makanan yang
+                tepat.
+              </p>
+
+              <!-- Footer -->
+              <div
+                class="flex justify-between items-center mt-4 text-gray-500 text-sm"
+              >
+                <div class="flex items-center gap-2">
+                  <!-- Icon profile -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 4.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 22.5a8.25 
+                                     8.25 0 1115 0v.75H4.5v-.75z"
+                    />
+                  </svg>
+                  <span>Sarah Green</span>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  <!-- Icon jam -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 8v6l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span>5 min read</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="js/data.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="Assets/Logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      @keyframes smoothBounce {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-6px);
+          opacity: 0.8;
+        }
+      }
+
+      .smooth-bounce {
+        animation: smoothBounce 0.6s ease-in-out infinite;
+      }
+    </style>
+    <title>Upload</title>
+  </head>
+  <body
+    class="bg-gray-100"
+    x-data="{ openAside: false, showLogout: false, openProfile: false }"
+  >
+    <!-- Loading Popup -->
+    <div
+      x-data="{ loading: true }"
+      x-init="
+    window.addEventListener('load', () => {
+      setTimeout(() => { loading = false }, 400);
+    });
+  "
+      x-show="loading"
+      x-transition.opacity.duration.700ms
+      class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-emerald-200 to-emerald-300"
+    >
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/60"></div>
+
+      <!-- Content -->
+      <div
+        class="relative text-white flex flex-col items-center space-y-4 animate-fadeIn"
+      >
+        <!-- Logo berputar -->
+        <img
+          src="Assets/Logo.png"
+          class="w-20 h-20 animate-spin-slow drop-shadow-xl"
+          alt="Logo"
+        />
+
+        <!-- Title -->
+        <h1 class="text-3xl font-bold tracking-wide drop-shadow-lg">
+          EcoRecycle
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg tracking-wide opacity-90">
+          Transform Waste Into Worth
+        </p>
+
+        <!-- Loading dots -->
+        <div class="flex space-x-2 pt-2">
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0s"
+          ></div>
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0.15s"
+          ></div>
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0.3s"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!-- =============== ASIDE (Mobile Slide + Desktop Fixed) =============== -->
+    <aside
+      class="fixed top-0 left-0 h-full w-64 bg-white shadow-md z-[45] transform transition-all duration-300 -translate-x-full lg:translate-x-0"
+      :class="{ '-translate-x-full': !openAside, 'translate-x-0': openAside }"
+    >
+      <div class="flex items-center justify-between px-5 py-4 border-b h-20">
+        <!-- Logo + Title -->
+        <div class="flex items-center gap-2">
+          <img src="Assets/Logo.png" alt="" class="w-7 h-7" />
+          <h2 class="font-semibold text-lg">EcoRecycle</h2>
+        </div>
+
+        <!-- Close Button (mobile only) -->
+        <button @click="openAside=false" class="lg:hidden text-xl">✕</button>
+      </div>
+
+      <!-- Wrapper untuk menu & logout agar logout tetap di bawah -->
+      <div
+        class="flex flex-col justify-between h-[calc(100%-80px)] py-5 px-6 mt-3"
+      >
+        <!-- MENU -->
+        <nav class="space-y-2">
+          <a
+            href="dashboard.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-home.png" class="w-4" />
+            Dashboard
+          </a>
+
+          <a
+            href="upload.html"
+            class="flex items-center gap-3 text-green-600 font-medium pl-3 bg-green-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-uplod.png" class="w-4" />
+            Upload
+          </a>
+
+          <a
+            href="quizzes.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-quiz.png" class="w-4" />
+            Quizzes
+          </a>
+
+          <a
+            href="calculate.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-calulate.png" class="w-4" />
+            Calculate
+          </a>
+
+          <a
+            href="wastecheck.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-check.png" class="w-4 rounded-sm" />
+            WasteCheck
+          </a>
+
+          <a
+            href="comunity.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-comunity.png" class="w-4" />
+            Community
+          </a>
+
+          <a
+            href="shop.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-shop.png" class="w-4" />
+            Shop
+          </a>
+
+          <a
+            href="blog.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-blog.png" class="w-4" />
+            Blog
+          </a>
+        </nav>
+
+        <!-- LOGOUT (selalu di bawah) -->
+        <div class="pt-4 mb-6">
+          <button
+            class="flex items-center gap-3 text-red-500 pl-1"
+            @click="showLogout = true ; openAside = false"
+          >
+            <img src="Assets/D-exit.png" class="w-4" />
+            Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- BACKDROP MOBILE -->
+    <div
+      x-show="openAside"
+      @click="openAside=false"
+      class="fixed inset-0 bg-black/40 z-40 lg:hidden"
+    ></div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <header class="pl-0 lg:pl-64 bg-white border-b sticky top-0 z-30 h-20">
+      <div class="flex items-center justify-between px-4 py-3">
+        <!-- LEFT (Hamburger + Title) -->
+        <div class="flex items-center gap-3">
+          <!-- Hamburger (mobile only) -->
+          <button @click="openAside=true" class="lg:hidden text-2xl">☰</button>
+
+          <!-- Title -->
+          <div>
+            <h1 class="text-lg font-semibold">Upload Items</h1>
+            <p class="text-xs text-gray-500 -mt-1">Selamat datang kembali!</p>
+          </div>
+        </div>
+        <!-- RIGHT -->
+        <div class="flex items-center gap-4 md:mr-10">
+          <!-- Notification button -->
+          <button
+            class="p-2 rounded-full bg-gray-100"
+            onclick="window.location.href='notifikasi.html'"
+          >
+            <img src="Assets/Lonceng.png" class="w-5" />
+          </button>
+
+          <!-- PROFILE BUTTON -->
+          <button
+            @click="openProfile = !openProfile"
+            class="flex items-center gap-2 p-2 pr-3 bg-gray-100 rounded-full hover:bg-gray-200 transition"
+          >
+            <img
+              src="Assets/Profil.png"
+              class="w-9 h-9 rounded-full"
+              id="profilePhoto"
+            />
+
+            <div class="hidden md:block text-left">
+              <p
+                class="text-sm font-semibold leading-tight"
+                id="username-1"
+              ></p>
+              <p class="text-[11px] text-gray-500">
+                <span id="level-1"></span> • <span id="poin-1"></span>
+              </p>
+            </div>
+          </button>
+
+          <!-- DROPDOWN -->
+          <div
+            x-show="openProfile"
+            @click.outside="openProfile = false"
+            x-transition
+            class="absolute right-4 top-full mt-2 w-64 bg-white rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-5 z-50"
+          >
+            <!-- NAME + EMAIL -->
+            <div class="mb-4">
+              <p class="text-base font-semibold" id="username-2"></p>
+              <p class="text-xs text-gray-500 break-words" id="email"></p>
+
+              <!-- LEVEL & POINTS BOX -->
+              <div class="mt-3 flex items-center gap-3">
+                <div
+                  class="px-3 py-1 rounded-lg text-sm font-medium bg-[#DCFCE7] text-green-700"
+                >
+                  <span id="level-2"></span>
+                </div>
+                <div
+                  class="px-3 py-1 rounded-lg text-sm font-medium bg-[#FEF9C3] text-yellow-700"
+                >
+                  <span id="poin-2"></span>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3 border-gray-200" />
+
+            <!-- MENU LIST -->
+            <ul class="">
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href='profile.html'"
+              >
+                <img src="Assets/P-profile.png" alt="" class="w-4" />
+                <span><a href="profile.html">Profile Saya</a></span>
+              </li>
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href='settings.html'"
+              >
+                <img src="Assets/P-settings.png" alt="" class="w-4" />
+                <span><a href="settings.html">Pengaturan</a></span>
+              </li>
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href='bantuan.html'"
+              >
+                <img src="Assets/P-bantuan.png" alt="" class="w-4" />
+                <span><a href="bantuan.html">Bantuan</a></span>
+              </li>
+            </ul>
+
+            <hr class="my-3 border-gray-200" />
+
+            <!-- LOGOUT -->
+            <button
+              class="w-full text-left flex items-center gap-3 text-red-500 hover:text-red-600 transition p-2"
+              @click="showLogout = true ; openProfile = false"
+            >
+              <img src="Assets/D-exit.png" alt="" class="w-4" /> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== CONTENT ==================== -->
+    <main class="md:p-10 pl-0 lg:pl-64">
+      <div>
+        <!-- Overlay -->
+        <div
+          x-show="showLogout"
+          @click="showLogout = false"
+          x-transition.opacity
+          class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-100"
+        >
+          <!-- Popup Card -->
+          <div
+            @click.stop
+            x-show="showLogout"
+            x-transition.scale.origin.center
+            class="bg-white w-96 p-8 rounded-2xl shadow-xl text-center"
+          >
+            <!-- Icon -->
+            <div class="flex justify-center mb-4">
+              <img src="Assets/D-logout.png" alt="" class="w-20" />
+            </div>
+
+            <!-- Text -->
+            <h2 class="text-2xl font-bold mb-1">Yakin mau logout?</h2>
+            <p class="text-gray-500 mb-6 text-sm">
+              Kamu akan keluar dari sesi ini.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 justify-center">
+              <button
+                class="bg-red-600 text-white px-5 py-2 rounded-full font-medium hover:brightness-90"
+                @click="window.location.href = 'index.html'"
+              >
+                Iya, Logout
+              </button>
+
+              <button
+                class="bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-medium hover:bg-gray-300"
+                @click="showLogout = false"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="py-10 px-4 md:px-0">
+        <div x-data="wasteFlow()" class="max-w-2xl mx-auto">
+          <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-5xl font-bold mb-5">
+              Pusat Pengelolaan Sampah
+            </h1>
+            <p class="md:text-base text-sm text-gray-600 mt-2">
+              Unggah, klasifikasikan, dan lacak perjalanan daur ulang Anda
+            </p>
+          </div>
+          <!-- STEP 1 — UPLOAD AREA -->
+          <template x-if="step === 1">
+            <section
+              class="bg-white w-full p-3 md:p-10 rounded-xl shadow-md border border-green-500 border-[3px]"
+            >
+              <div
+                class="border-2 border-dashed border-green-400 bg-green-50 rounded-xl p-10 text-center cursor-pointer"
+                @click="$refs.fileInput.click()"
+              >
+                <input
+                  type="file"
+                  class="hidden"
+                  accept="image/*"
+                  x-ref="fileInput"
+                  @change="handleFile"
+                />
+
+                <img src="Assets/Img-upload.png" class="w-16 mx-auto mb-4" />
+
+                <p class="font-semibold text-[#047857]">
+                  Drop image here or click to upload
+                </p>
+                <p class="text-sm text-gray-500 mt-1 font-semibold">
+                  PNG, JPG, JPEG
+                </p>
+              </div>
+              <p class="text-sm text-gray-500 mt-3 italic">
+                Catatan: Fitur unggah masih dalam tahap pengembangan. Beberapa
+                fungsi mungkin belum berjalan sepenuhnya.
+              </p>
+            </section>
+          </template>
+
+          <!-- STEP 2 — PREVIEW & ACTION BUTTONS -->
+          <template x-if="step === 2">
+            <section
+              class="bg-white w-full p-3 md:p-10 rounded-xl shadow-md border border-green-500 border-[3px]"
+            >
+              <div
+                class="border-2 border-dashed border-green-400 bg-green-50 rounded-xl p-6"
+              >
+                <!-- Image Preview -->
+                <div class="relative w-full flex justify-center mb-6">
+                  <img :src="imageData" class="w-64 rounded shadow" />
+
+                  <!-- Delete Button -->
+                  <img
+                    @click="reset()"
+                    src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png"
+                    class="w-5 absolute -right-5 -top-4 md:right-0 md:top-0 cursor-pointer"
+                  />
+                </div>
+              </div>
+              <!-- Two Buttons -->
+              <div class="flex gap-4 mt-10" x-data="mainApp()">
+                <button
+                  @click="analyze(); addPoinBtn();"
+                  onclick="addPoints(20)"
+                  class="w-full py-3 bg-[#0D9488] text-white rounded-lg font-semibold text-sm"
+                >
+                  Lanjut
+                </button>
+                <button
+                  @click="reset()"
+                  class="w-full py-3 border border-[#0D9488] border-[2px] text-[#0D9488] rounded-lg font-semibold text-sm"
+                >
+                  Tidak
+                </button>
+              </div>
+            </section>
+          </template>
+
+          <!-- STEP 3 — RESULT -->
+          <template x-if="step === 3">
+            <section
+              class="bg-white w-full p-3 md:p-10 rounded-xl shadow-md border border-green-500 border-[3px]"
+            >
+              <div class="space-y-6">
+                <!-- Image again -->
+                <div
+                  class="border-2 border-dashed border-green-400 bg-green-50 rounded-xl p-6"
+                >
+                  <div class="relative w-full flex justify-center mb-6">
+                    <img :src="imageData" class="w-64 rounded shadow" />
+
+                    <!-- delete button -->
+                    <img
+                      @click="reset()"
+                      src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png"
+                      class="w-5 absolute right-0 top-0 cursor-pointer"
+                    />
+                  </div>
+                </div>
+
+                <!-- Analysis Box -->
+                <div
+                  class="p-6 rounded-xl text-white"
+                  style="background: linear-gradient(45deg, #0ea5e9, #2563eb)"
+                >
+                  <h2
+                    class="text-xl font-bold text-center"
+                    x-text="result.category"
+                  ></h2>
+                  <p
+                    class="text-center opacity-90 mb-4"
+                    x-text="result.item"
+                  ></p>
+
+                  <p
+                    class="text-sm opacity-90 leading-relaxed text-center"
+                    x-text="result.description"
+                  ></p>
+                </div>
+
+                <!-- What To Do / Not To Do -->
+                <div class="bg-white rounded-xl shadow p-6">
+                  <h3 class="text-lg font-bold mb-4 text-center">
+                    Panduan Pengelolaan Sampah
+                  </h3>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4
+                        class="font-semibold text-green-600 mb-2 flex items-center"
+                      >
+                        <img src="Assets/Do.png" alt="" class="w-5 mr-2" />
+                        What to Do
+                      </h4>
+                      <ul class="space-y-1 text-gray-700 text-sm">
+                        <template x-for="item in result.do">
+                          <li>• <span x-text="item"></span></li>
+                        </template>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4
+                        class="font-semibold text-red-600 mb-2 flex items-center"
+                      >
+                        <img src="Assets/Not-do.png" alt="" class="w-5 mr-2" />
+                        What NOT to Do
+                      </h4>
+                      <ul class="space-y-1 text-gray-700 text-sm">
+                        <template x-for="item in result.dont">
+                          <li>• <span x-text="item"></span></li>
+                        </template>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Points Box -->
+                <div
+                  class="text-center border border-green-300 bg-green-50 rounded-xl py-8"
+                >
+                  <img src="Assets/Gift.png" class="w-10 mx-auto mb-2" />
+                  <h3 class="text-xl font-bold">Great Job!</h3>
+                  <p class="text-green-600 my-1 text-3xl font-semibold">
+                    <span x-text="result.points"></span> Points
+                  </p>
+                  <p class="text-gray-500 text-sm">
+                    Upload lagi untuk mendapatkan poin lebih banyak
+                  </p>
+                </div>
+              </div>
+              <button
+                class="bg-[#0D9488] py-2 px-4 text-white text-sm mt-2 rounded-xl w-full"
+                @click="reset()"
+              >
+                New Upload
+              </button>
+            </section>
+          </template>
+        </div>
+      </section>
+      <script src="js/data.js"></script>
+      <script src="js/upload.js"></script>
+    </main>
+  </body>
+</html>

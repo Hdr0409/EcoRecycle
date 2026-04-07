@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="Assets/Logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      @keyframes smoothBounce {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-6px);
+          opacity: 0.8;
+        }
+      }
+
+      .smooth-bounce {
+        animation: smoothBounce 0.6s ease-in-out infinite;
+      }
+    </style>
+    <title>Blog</title>
+    <style>
+      .animate-fadeIn {
+        animation: fadeIn 0.35s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-100"
+    x-data="{ openAside: false, showLogout: false, openProfile: false }"
+  >
+    <!-- Loading Popup -->
+    <div
+      x-data="{ loading: true }"
+      x-init="
+    window.addEventListener('load', () => {
+      setTimeout(() => { loading = false }, 400);
+    });
+  "
+      x-show="loading"
+      x-transition.opacity.duration.700ms
+      class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-emerald-200 to-emerald-300"
+    >
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/60"></div>
+
+      <!-- Content -->
+      <div
+        class="relative text-white flex flex-col items-center space-y-4 animate-fadeIn"
+      >
+        <img
+          src="Assets/Logo.png"
+          class="w-20 h-20 animate-spin-slow drop-shadow-xl"
+          alt="Logo"
+        />
+
+        <!-- Title -->
+        <h1 class="text-3xl font-bold tracking-wide drop-shadow-lg">
+          EcoRecycle
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg tracking-wide opacity-90">
+          Transform Waste Into Worth
+        </p>
+
+        <!-- Loading dots -->
+        <div class="flex space-x-2 pt-2">
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0s"
+          ></div>
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0.15s"
+          ></div>
+          <div
+            class="w-3 h-3 bg-white rounded-full smooth-bounce"
+            style="animation-delay: 0.3s"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!-- =============== ASIDE (Mobile Slide + Desktop Fixed) =============== -->
+    <aside
+      class="fixed top-0 left-0 h-full w-64 bg-white shadow-md z-[45] transform transition-all duration-300 -translate-x-full lg:translate-x-0"
+      :class="{ '-translate-x-full': !openAside, 'translate-x-0': openAside }"
+    >
+      <div class="flex items-center justify-between px-5 py-4 border-b h-20">
+        <!-- Logo + Title -->
+        <div class="flex items-center gap-2">
+          <img src="Assets/Logo.png" alt="" class="w-7 h-7" />
+          <h2 class="font-semibold text-lg">EcoRecycle</h2>
+        </div>
+
+        <!-- Close Button (mobile only) -->
+        <button @click="openAside=false" class="lg:hidden text-xl">✕</button>
+      </div>
+
+      <!-- Wrapper untuk menu & logout agar logout tetap di bawah -->
+      <div
+        class="flex flex-col justify-between h-[calc(100%-80px)] py-5 px-6 mt-3"
+      >
+        <!-- MENU -->
+        <nav class="space-y-2">
+          <a
+            href="dashboard.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-home.png" class="w-4" />
+            Dashboard
+          </a>
+
+          <a
+            href="upload.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-uplod.png" class="w-4" />
+            Upload
+          </a>
+
+          <a
+            href="quizzes.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-quiz.png" class="w-4" />
+            Quizzes
+          </a>
+
+          <a
+            href="calculate.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-calulate.png" class="w-4" />
+            Calculate
+          </a>
+
+          <a
+            href="wastecheck.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-check.png" class="w-4 rounded-sm" />
+            WasteCheck
+          </a>
+
+          <a
+            href="comunity.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-comunity.png" class="w-4" />
+            Community
+          </a>
+
+          <a
+            href="shop.html"
+            class="flex items-center gap-3 pl-3 hover:bg-gray-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-shop.png" class="w-4" />
+            Shop
+          </a>
+
+          <a
+            href="#"
+            class="flex items-center gap-3 text-green-600 font-medium pl-3 bg-green-100 rounded-lg py-2"
+          >
+            <img src="Assets/D-blog.png" class="w-4" />
+            Blog
+          </a>
+        </nav>
+
+        <!-- LOGOUT (selalu di bawah) -->
+        <div class="pt-4 mb-6">
+          <button
+            class="flex items-center gap-3 text-red-500 pl-1"
+            @click="showLogout = true ; openAside = false"
+          >
+            <img src="Assets/D-exit.png" class="w-4" />
+            Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- BACKDROP MOBILE -->
+    <div
+      x-show="openAside"
+      @click="openAside=false"
+      class="fixed inset-0 bg-black/40 z-40 lg:hidden"
+    ></div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <header class="pl-0 lg:pl-64 bg-white border-b sticky top-0 z-30 h-20">
+      <div class="flex items-center justify-between px-4 py-3">
+        <!-- LEFT (Hamburger + Title) -->
+        <div class="flex items-center gap-3">
+          <!-- Hamburger (mobile only) -->
+          <button @click="openAside=true" class="lg:hidden text-2xl">☰</button>
+
+          <!-- Title -->
+          <div>
+            <h1 class="text-lg font-semibold">Recycling Blog</h1>
+            <p class="text-xs text-gray-500 -mt-1">Selamat datang kembali!</p>
+          </div>
+        </div>
+        <!-- RIGHT -->
+        <div class="flex items-center gap-4 md:mr-10">
+          <!-- Notification button -->
+          <button
+            class="p-2 rounded-full bg-gray-100"
+            onclick="window.location.href='notifikasi.html'"
+          >
+            <img src="Assets/Lonceng.png" class="w-5" />
+          </button>
+
+          <!-- PROFILE BUTTON -->
+          <button
+            @click="openProfile = !openProfile"
+            class="flex items-center gap-2 p-2 pr-3 bg-gray-100 rounded-full hover:bg-gray-200 transition"
+          >
+            <img
+              src="Assets/Profil.png"
+              class="w-9 h-9 rounded-full"
+              id="profilePhoto"
+            />
+
+            <div class="hidden md:block text-left">
+              <p
+                class="text-sm font-semibold leading-tight"
+                id="username-1"
+              ></p>
+              <p class="text-[11px] text-gray-500">
+                <span id="level-1"></span> • <span id="poin-1"></span>
+              </p>
+            </div>
+          </button>
+
+          <!-- DROPDOWN -->
+          <div
+            x-show="openProfile"
+            @click.outside="openProfile = false"
+            x-transition
+            class="absolute right-4 top-full mt-2 w-64 bg-white rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-5 z-50"
+          >
+            <!-- NAME + EMAIL -->
+            <div class="mb-4">
+              <p class="text-base font-semibold" id="username-2"></p>
+              <p class="text-xs text-gray-500 break-words" id="email"></p>
+
+              <!-- LEVEL & POINTS BOX -->
+              <div class="mt-3 flex items-center gap-3">
+                <div
+                  class="px-3 py-1 rounded-lg text-sm font-medium bg-[#DCFCE7] text-green-700"
+                >
+                  <span id="level-2"></span>
+                </div>
+                <div
+                  class="px-3 py-1 rounded-lg text-sm font-medium bg-[#FEF9C3] text-yellow-700"
+                >
+                  <span id="poin-2"></span>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3 border-gray-200" />
+
+            <!-- MENU LIST -->
+            <ul class="">
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href='profile.html'"
+              >
+                <img src="Assets/P-profile.png" alt="" class="w-4" />
+                <span><a href="profile.html">Profile Saya</a></span>
+              </li>
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href='settings.html'"
+              >
+                <img src="Assets/P-settings.png" alt="" class="w-4" />
+                <span><a href="settings.html">Pengaturan</a></span>
+              </li>
+              <li
+                class="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition hover:bg-gray-100 p-2 rounded-lg"
+                onclick="window.location.href='bantuan.html'"
+              >
+                <img src="Assets/P-bantuan.png" alt="" class="w-4" />
+                <span><a href="bantuan.html">Bantuan</a></span>
+              </li>
+            </ul>
+
+            <hr class="my-3 border-gray-200" />
+
+            <!-- LOGOUT -->
+            <button
+              class="w-full text-left flex items-center gap-3 text-red-500 hover:text-red-600 transition p-2"
+              @click="showLogout = true ; openProfile = false"
+            >
+              <img src="Assets/D-exit.png" alt="" class="w-4" /> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== CONTENT ==================== -->
+    <main class="md:p-10 pl-0 lg:pl-64">
+      <div>
+        <!-- Overlay -->
+        <div
+          x-show="showLogout"
+          @click="showLogout = false"
+          x-transition.opacity
+          class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-40"
+        >
+          <!-- Popup Card -->
+          <div
+            @click.stop
+            x-show="showLogout"
+            x-transition.scale.origin.center
+            class="bg-white w-96 p-8 rounded-2xl shadow-xl text-center"
+          >
+            <!-- Icon -->
+            <div class="flex justify-center mb-4">
+              <img src="Assets/D-logout.png" alt="" class="w-20" />
+            </div>
+
+            <!-- Text -->
+            <h2 class="text-2xl font-bold mb-1">Yakin mau logout?</h2>
+            <p class="text-gray-500 mb-6 text-sm">
+              Kamu akan keluar dari sesi ini.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 justify-center">
+              <button
+                class="bg-red-600 text-white px-5 py-2 rounded-full font-medium hover:brightness-90"
+                @click="window.location.href = 'index.html'"
+              >
+                Iya, Logout
+              </button>
+
+              <button
+                class="bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-medium hover:bg-gray-300"
+                @click="showLogout = false"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="py-10 px-4 md:px-0">
+        <div class="text-center mb-10">
+          <h1 class="text-3xl md:text-5xl font-bold mb-5">Recycling Blog</h1>
+          <p class="md:text-base text-sm text-gray-600 mt-2">
+            Tips, Panduan, dan cerita untuk menginspirasi perjalanan daur ulang
+            Anda
+          </p>
+        </div>
+        <section class="mb-20">
+          <div x-data="articlePage()" class="max-w-6xl mx-auto px-4">
+            <!-- Search -->
+            <div
+              class="flex justify-start mb-6 bg-white rounded-2xl px-6 border max-w-xl mx-auto"
+            >
+              <img src="Assets/Search.png" class="w-4 h-4 mt-4" />
+              <input
+                x-model="search"
+                type="text"
+                placeholder="Cari artikel..."
+                class="w-full rounded-xl p-3 outline-none"
+              />
+            </div>
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+              <template x-for="cat in categories">
+                <button
+                  @click="activeCategory = cat"
+                  x-text="cat"
+                  :class="activeCategory === cat ? 'bg-green-600 text-white' : 'bg-white'"
+                  class="px-4 py-2 rounded-xl border shadow-sm hover:bg-green-100 hover:text-black transition"
+                ></button>
+              </template>
+            </div>
+
+            <!-- Main Article -->
+            <template x-if="filteredArticles().length > 0">
+              <div
+                @click="openArticle(filteredArticles()[0]); addPoints();"
+                class="bg-white rounded-xl shadow-md overflow-hidden mb-16 cursor-pointer max-w-6xl mx-auto flex flex-col md:flex-row h-auto md:h-70 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+              >
+                <!-- Gambar -->
+                <img
+                  :src="filteredArticles()[0].image"
+                  class="w-full h-48 sm:h-56 md:w-[55%] md:h-auto lg:w-[60%] object-cover object-top"
+                />
+
+                <!-- Konten -->
+                <div class="p-6 w-full md:w-1/2 justify-between flex flex-col">
+                  <div>
+                    <span
+                      class="text-sm px-3 py-1 rounded-full bg-green-100 text-green-700 font-medium"
+                      x-text="filteredArticles()[0].category"
+                    ></span>
+
+                    <h2
+                      class="text-2xl lg:text-3xl font-bold mt-3 mb-4"
+                      x-text="filteredArticles()[0].title"
+                    ></h2>
+
+                    <p
+                      class="text-base lg:text-lg text-gray-600"
+                      x-text="filteredArticles()[0].description"
+                    ></p>
+                  </div>
+
+                  <!-- Footer -->
+                  <div
+                    class="flex justify-between items-center mt-4 text-gray-500 text-sm"
+                  >
+                    <div class="flex items-center gap-2">
+                      <!-- Icon profile -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M15.75 4.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 22.5a8.25 
+              8.25 0 1115 0v.75H4.5v-.75z"
+                        />
+                      </svg>
+                      <span>Sarah Green</span>
+                    </div>
+
+                    <div class="flex items-center gap-1">
+                      <!-- Icon jam -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 8v6l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>5 min read</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
+            <!-- Grid Articles -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <template x-for="(article, index) in filteredArticles().slice(1)">
+                <div
+                  @click="openArticle(article); addPoints();"
+                  class="group bg-white shadow-md rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                >
+                  <img
+                    :src="article.image"
+                    class="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+
+                  <div class="p-5 h-">
+                    <span
+                      class="text-sm px-3 py-1 rounded-full bg-green-100 text-green-700 font-medium"
+                      x-text="article.category"
+                    ></span>
+
+                    <h3
+                      class="font-bold text-lg mt-3 mb-2"
+                      x-text="article.title"
+                    ></h3>
+
+                    <p
+                      class="text-gray-500 text-sm mb-4"
+                      x-text="article.description"
+                    ></p>
+
+                    <div
+                      class="flex justify-between items-center mt-4 text-gray-500 text-sm"
+                    >
+                      <div class="flex items-center gap-2">
+                        <!-- Icon profile -->
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-4 h-4"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15.75 4.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 22.5a8.25 
+                                     8.25 0 1115 0v.75H4.5v-.75z"
+                          />
+                        </svg>
+                        <span>Sarah Green</span>
+                      </div>
+
+                      <div class="flex items-center gap-1">
+                        <!-- Icon jam -->
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-4 h-4"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 8v6l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <span>5 min read</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+            <!-- ================= POPUP DETAIL ARTIKEL (DESAIN BARU) ================= -->
+            <div
+              x-show="showPopup"
+              x-transition.opacity
+              class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[45] flex items-center justify-center p-4"
+              @click="showPopup=false"
+            >
+              <div
+                @click.stop
+                x-transition.scale
+                class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden relative animate-fadeIn max-h-[90vh] flex flex-col"
+              >
+                <button
+                  @click="showPopup = false"
+                  class="absolute top-4 right-4 bg-white/90 h-9 w-9 rounded-full shadow-md text-gray-700 hover:bg-white hover:shadow-lg transition z-20"
+                >
+                  ✕
+                </button>
+                <!-- Scrollable Content -->
+                <div
+                  class="overflow-y-auto"
+                  id="popupScroll"
+                  x-data="pointSystem"
+                >
+                  <!-- Header Image -->
+                  <div
+                    class="relative h-60 md:h-72 w-full shrink-0 overflow-hidden"
+                  >
+                    <img
+                      :src="selectedArticle?.image"
+                      class="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <div class="p-7">
+                    <!-- Category -->
+                    <span
+                      x-text="selectedArticle?.category"
+                      class="text-sm px-4 py-1 rounded-full bg-green-100 text-green-700 font-medium"
+                    ></span>
+
+                    <!-- Title -->
+                    <h2
+                      x-text="selectedArticle?.title"
+                      class="text-3xl font-bold mt-4 mb-3 leading-tight"
+                    ></h2>
+
+                    <!-- Long Text Only -->
+                    <p
+                      x-text="selectedArticle?.longText"
+                      class="text-gray-700 leading-relaxed whitespace-pre-line text-[15px]"
+                    ></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="js/data.js"></script>
+    <script src="js/blog.js"></script>
+  </body>
+</html>

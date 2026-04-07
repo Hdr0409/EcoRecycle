@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="Assets/Logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <title>Privasi & Keamanan</title>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- NAVBAR -->
+    <nav
+      class="w-full bg-white border-b px-6 py-4 flex items-center justify-between shadow-sm"
+    >
+      <!-- LEFT -->
+      <div
+        class="flex items-center gap-3 cursor-pointer"
+        onclick="history.back()"
+      >
+        <img src="Assets/Back.png" class="w-5" />
+        <div>
+          <h1 class="text-lg font-semibold">Privasi & Keamanan</h1>
+          <p class="text-sm text-gray-500 -mt-1">
+            Kelola privasi akun Anda dan kontrol keamanan di sini.
+          </p>
+        </div>
+      </div>
+    </nav>
+
+    <!-- POPUP -->
+    <div
+      x-data="{ showPopup: false, popupMessage: '' }"
+      @unduh.window="popupMessage = 'Data akun berhasil diunduh.'; showPopup = true"
+      @hapus.window="popupMessage = 'Riwayat aktivitas berhasil dihapus.'; showPopup = true"
+    >
+      <!-- Background -->
+      <div
+        x-show="showPopup"
+        x-transition.opacity
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[300]"
+        @click="showPopup = false"
+      >
+        <!-- Popup Box -->
+        <div
+          x-show="showPopup"
+          x-transition.scale
+          @click.stop
+          class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 text-center"
+        >
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">Selesai</h2>
+          <p class="text-gray-600 mb-5" x-text="popupMessage"></p>
+
+          <button
+            @click="showPopup = false"
+            class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium"
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <section
+      class="max-w-3xl mx-auto mt-10 rounded-xl overflow-hidden px-4 mb-10"
+    >
+      <div class="bg-white p-6 md:p-8 rounded-2xl shadow-md space-y-6">
+        <div
+          class="mx-auto space-y-8"
+          x-data="{ 
+                showDeletePopup: false, 
+                confirmText: '', 
+                errorMsg: '' 
+              }"
+        >
+          <!-- TITLE -->
+          <div>
+            <h1 class="text-3xl font-bold text-gray-800">Privasi & Keamanan</h1>
+            <p class="text-gray-600 mt-1">
+              Kelola privasi akun Anda dan kontrol keamanan di sini.
+            </p>
+          </div>
+
+          <!-- SECURITY STATUS CARD -->
+          <div class="p-6 bg-white rounded-2xl shadow-md space-y-4">
+            <h2 class="text-xl font-semibold text-gray-800">
+              Status Keamanan Akun
+            </h2>
+
+            <div
+              class="flex items-center gap-3 p-4 bg-green-50 rounded-xl border border-green-200"
+            >
+              <div class="text-green-600 text-xl">✔</div>
+              <p class="text-gray-700 text-xs md:text-base">
+                Akun Anda aman. Tidak ada aktivitas mencurigakan.
+              </p>
+            </div>
+
+            <button
+              class="px-5 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
+              @click="window.location.href='aktivitas.html'"
+            >
+              Periksa Aktivitas Login
+            </button>
+          </div>
+
+          <!-- PRIVACY SETTINGS -->
+          <div class="p-6 bg-white rounded-2xl shadow-md space-y-5">
+            <h2 class="text-xl font-semibold text-gray-800">
+              Pengaturan Privasi
+            </h2>
+
+            <!-- visibility -->
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="font-medium text-gray-800">Keterlihatan Profil</h3>
+                <p class="text-gray-600 text-sm">
+                  Atur siapa yang bisa melihat profil Anda.
+                </p>
+              </div>
+              <select class="px-3 py-2 border rounded-lg">
+                <option>Publik</option>
+                <option>Private</option>
+                <option>Teman</option>
+              </select>
+            </div>
+
+            <!-- data share -->
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="font-medium text-gray-800">Berbagi Data</h3>
+                <p class="text-gray-600 text-sm">
+                  Izinkan penggunaan data untuk peningkatan layanan.
+                </p>
+              </div>
+              <input type="checkbox" class="toggle-checkbox" checked />
+            </div>
+          </div>
+
+          <!-- ACTIVITY -->
+          <div class="p-6 bg-white rounded-2xl shadow-md space-y-4">
+            <h2 class="text-xl font-semibold text-gray-800">Aktivitas Login</h2>
+            <p class="text-gray-600">
+              Lihat lokasi, perangkat, dan aktivitas login terbaru.
+            </p>
+
+            <button
+              class="px-5 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700"
+              @click="window.location.href='aktivitas.html'"
+            >
+              Lihat Aktivitas
+            </button>
+          </div>
+
+          <!-- DATA CONTROL -->
+          <div class="p-6 bg-white rounded-2xl shadow-md space-y-5">
+            <h2 class="text-xl font-semibold text-gray-800">Kontrol Data</h2>
+
+            <div class="space-y-3">
+              <button
+                class="w-full px-5 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-left"
+                @click="$dispatch('unduh')"
+              >
+                Unduh Data Akun
+              </button>
+
+              <button
+                class="w-full px-5 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-left"
+                @click="$dispatch('hapus')"
+              >
+                Hapus Riwayat Aktivitas
+              </button>
+
+              <button
+                class="w-full px-5 py-3 bg-red-100 hover:bg-red-200 rounded-lg text-left text-red-600"
+                @click="showDeletePopup = true"
+              >
+                Hapus Akun Secara Permanen
+              </button>
+              <!-- POPUP HAPUS AKUN -->
+              <div>
+                <!-- Background -->
+                <div
+                  x-show="showDeletePopup"
+                  x-transition.opacity
+                  class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[300]"
+                  @click="showDeletePopup = false; confirmText=''; errorMsg='';"
+                >
+                  <!-- Popup Box -->
+                  <div
+                    x-show="showDeletePopup"
+                    x-transition.scale
+                    @click.stop
+                    class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-7 space-y-5"
+                  >
+                    <!-- TITLE -->
+                    <h2 class="text-2xl font-bold text-gray-800">Hapus Akun</h2>
+
+                    <!-- TEXT -->
+                    <p class="text-gray-600 leading-relaxed">
+                      Menghapus akun bersifat
+                      <span class="font-semibold text-red-600">permanen</span>.
+                      Jika Anda ingin melanjutkan, ketik
+                      <span class="font-bold">"DELETE"</span> di bawah ini.
+                    </p>
+
+                    <!-- INPUT -->
+                    <div class="space-y-2">
+                      <input
+                        type="text"
+                        x-model="confirmText"
+                        placeholder='Ketik "DELETE"'
+                        class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500"
+                      />
+
+                      <!-- ERROR MESSAGE -->
+                      <p
+                        x-show="errorMsg"
+                        class="text-sm text-red-500"
+                        x-text="errorMsg"
+                      ></p>
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="flex justify-end gap-3 pt-2">
+                      <button
+                        class="px-6 py-2 rounded-lg border hover:bg-gray-100 text-gray-700"
+                        @click="showDeletePopup = false; confirmText=''; errorMsg='';"
+                      >
+                        Batal
+                      </button>
+
+                      <button
+                        class="px-6 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 font-medium"
+                        @click="
+                        if(confirmText === 'DELETE') {
+                          window.location.href='index.html'
+                        } else {
+                          errorMsg = 'Ketik DELETE untuk menghapus akun.'
+                        }
+                      "
+                      >
+                        Lanjut
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALPINE.JS LOGIC -->
+    <script></script>
+  </body>
+</html>

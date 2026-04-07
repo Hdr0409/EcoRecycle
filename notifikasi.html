@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notification</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ALPINE -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- NAVBAR -->
+    <nav
+      class="w-full bg-white border-b py-4 px-6 flex items-center gap-3 shadow-sm"
+    >
+      <div
+        onclick="history.back()"
+        class="flex items-center gap-2 cursor-pointer"
+      >
+        <img src="Assets/Back.png" class="w-5 cursor-pointer" />
+        <p class="font-medium">Back</p>
+      </div>
+    </nav>
+    <div
+      x-data="notificationApp"
+      class="max-w-3xl mx-auto mt-10 p-10 rounded-xl shadow px-5 md:px-10 bg-white"
+    >
+      <div></div>
+      <!-- HEADER -->
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-3xl font-bold">Notification</h1>
+          <p
+            class="text-gray-500"
+            x-text="unreadCount + ' pesan belum terbaca'"
+          ></p>
+        </div>
+
+        <button
+          @click="markAllRead"
+          class="bg-green-600 hover:bg-green-700 text-white md:px-4 md:py-2 py-1 px-2 mt-5 rounded-lg"
+        >
+          Mark All Read
+        </button>
+      </div>
+
+      <!-- ========== HARI INI ========== -->
+      <h2 class="text-lg font-semibold mb-3">📅 Hari ini</h2>
+
+      <template
+        x-for="notif in notifications.filter(n => n.section === 'today')"
+        :key="notif.id"
+        class="px-4"
+      >
+        <div
+          class="bg-white rounded-xl p-5 mb-4 shadow border transition-all"
+          :class="notif.read ? 'opacity-50' : 'opacity-100'"
+        >
+          <h3 class="font-semibold text-green-700" x-text="notif.title"></h3>
+          <p class="text-gray-600 text-sm mt-1" x-text="notif.desc"></p>
+          <p class="text-gray-400 text-xs mt-1" x-text="notif.time"></p>
+
+          <div class="flex gap-3 mt-3">
+            <!-- Mark as Read -->
+            <button
+              class="px-3 py-1 border rounded-full text-green-600"
+              x-show="!notif.read"
+              @click="markRead(notif.id)"
+            >
+              Mark as Read
+            </button>
+
+            <!-- DELETE -->
+            <button
+              class="text-red-500 px-2 hover:text-red-700"
+              @click="deleteNotif(notif.id)"
+            >
+              🗑
+            </button>
+          </div>
+        </div>
+      </template>
+    </div>
+    <script src="js/notifikasi.js"></script>
+  </body>
+</html>

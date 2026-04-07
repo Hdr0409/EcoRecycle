@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="Assets/Logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+    <title>User Profile</title>
+  </head>
+
+  <body class="bg-[#F9FAFB]">
+    <!-- NAVBAR -->
+    <nav
+      class="w-full bg-white border-b py-4 px-6 flex items-center gap-3 shadow-sm"
+    >
+      <div
+        onclick="history.back()"
+        class="flex items-center gap-2 cursor-pointer"
+      >
+        <img src="Assets/Back.png" class="w-5 cursor-pointer" />
+        <p class="font-medium">Back</p>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="max-w-5xl mx-auto px-4 mt-10 rounded">
+      <!-- BANNER -->
+      <div class="w-full h-48 bg-gray-200 relative rounded-t-xl">
+        <img
+          id="profileBanner"
+          src="Assets/Banner.png"
+          class="w-full h-full object-cover object-top rounded-t-xl"
+        />
+
+        <!-- PROFILE IMAGE (overlap only) -->
+        <div class="absolute left-24 -bottom-16 transform -translate-x-1/2">
+          <img
+            id="profilePhoto"
+            src="Assets/PP.png"
+            class="w-32 h-32 rounded-full shadow"
+          />
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 gap-20 flex bg-white mb-10 shadow-lg rounded-xl p-6"
+      >
+        <!-- LEFT COLUMN -->
+        <div class="lg:col-span-1 items-start space-y-6">
+          <div class="bg-white rounded-xl p-6">
+            <!-- NAME + ROLE -->
+            <div class="mt-10">
+              <h1 class="text-2xl font-bold" id="username-1"></h1>
+              <p class="text-gray-500">User Pemula</p>
+            </div>
+
+            <!-- Followers / Following -->
+            <div class="flex gap-10 mt-5">
+              <div>
+                <p class="text-2xl font-bold">0</p>
+                <p class="text-gray-500 text-sm">Followers</p>
+              </div>
+              <div>
+                <p class="text-2xl font-bold">1</p>
+                <p class="text-gray-500 text-sm">Following</p>
+              </div>
+            </div>
+
+            <!-- Edit Profile Button -->
+            <div class="mt-6">
+              <a
+                href="edit-profile.html"
+                class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl flex items-center gap-2 w- px-auto justify-center"
+              >
+                Edit Profile
+              </a>
+            </div>
+
+            <!-- Description -->
+            <p
+              class="text-gray-400 mt-6 leading-tight text-sm break-words"
+              id="bio"
+            ></p>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="space-y-6">
+          <!-- Leaderboard Card -->
+          <div
+            class="bg-[#ECFDF5] border border-[#059669] border-2 rounded-lg shadow p-6"
+          >
+            <h2 class="text-gray-600 font-bold mb-2 text-center text-2xl">
+              Peringkat LeaderBoard
+            </h2>
+            <p class="text-5xl font-bold text-emerald-600 text-center">#30</p>
+            <p class="text-gray-500 text-center mt-2 text-sm">
+              Dari 30 Pengguna
+            </p>
+          </div>
+
+          <!-- Aktivitas Terbaru -->
+          <div class="bg-white rounded-lg p-6">
+            <h2 class="text-lg font-semibold mb-4 text-gray-700">
+              Aktivitas Terbaru
+            </h2>
+
+            <div
+              class="flex gap-3 p-1 rounded-lg hover:bg-gray-50 bg-[#F5FEFA] border-l-4 border-emerald-600 pl-4 py-2 shadow-md mb-3"
+            >
+              <img src="Assets/P-activitas.png" class="w-5 h-5 mt-1" />
+              <div class="">
+                <h3 class="font-medium text-emerald-600">
+                  Bermain Daily Quizzes
+                </h3>
+                <p class="text-gray-600 text-sm">
+                  User sudah berhasil menyelesaikan 5 quizzes harian dan
+                  memperoleh 10 poin
+                </p>
+                <p class="text-gray-400 text-xs mt-1">Nov 26, 2025 • 12:50AM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/data.js"></script>
+    <script src="js/profile.js"></script>
+  </body>
+</html>
